@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const DayDetails = ({ match }) => {
   const params= useParams()
-  const day = params.day
+  const {date,month,year} = params
   const [data_,setData] = useState(null)
   useEffect(() => {
     const API_KEY = "c86ebcf70483d42afab3581948f8a122";
@@ -16,7 +16,8 @@ const DayDetails = ({ match }) => {
       `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`
     )
       .then((response) => response.json())
-      .then((data) => setData(data));
+      .then((data) => {
+        setData(data)});
   }, []);
 
   return (
@@ -47,7 +48,7 @@ const DayDetails = ({ match }) => {
       >
         <div style={{ background: "rgba(0,0,0,0.5)", minHeight: "100vh" }}>
           {/* Render Forecast component with fetched data */}
-          {(data_ && day)?<HourlyForecast data={data_}day={day} />:null}
+          {(data_)?<HourlyForecast data={data_} date={`${month}/${date}/${year}`} />:null}
           
         </div>
       </div>

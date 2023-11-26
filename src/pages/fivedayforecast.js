@@ -14,7 +14,9 @@ const FiveDayForecast = () => {
       `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`
     )
       .then((response) => response.json())
-      .then((data) => setData(data));
+      .then((data) => {
+        setData(data)
+      });
   }, []);
 
   return (

@@ -5,7 +5,7 @@ import CloudySvg from "./../assets/cloudysvg.svg";
 import SunnySvg from "./../assets/sunnysvg.svg";
 import WindySvg from "./../assets/windysvg.svg";
 
-const HourlyForecast = ({ data,day }) => {
+const HourlyForecast = ({ data,date }) => {
   function convertDateFormat(inputString) {
     
     // Parse the input string into a Date object
@@ -52,7 +52,7 @@ const HourlyForecast = ({ data,day }) => {
       >
         {data.list.map((forecast, index) => 
           {
-            if(forecast.dt_txt.includes( day))return <div
+            return (new Date(forecast.dt*1000).toLocaleDateString() === date) ? <div
           
             key={index}
             style={{
@@ -70,6 +70,7 @@ const HourlyForecast = ({ data,day }) => {
               
             }}
           >
+            <p>{new Date(forecast.dt * 1000).toLocaleDateString()}</p>
             <h2>{forecast.dt_txt.split(" ")[1]}</h2>
             <h4> {forecast.main.temp} K</h4>
             <p>
@@ -82,8 +83,7 @@ const HourlyForecast = ({ data,day }) => {
             <h4>Humidity: {forecast.main.humidity}%</h4>
             <h4>Wind Speed: {forecast.wind.speed} m/s</h4>
             {/* You can include more details as needed */}
-          </div>; 
-          else return null
+          </div> : null 
           })}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import DayForecast from "./dailyforecast";
 import RainySvg from "./../assets/rainysvg.svg";
 import CloudySvg from "./../assets/cloudysvg.svg";
@@ -7,6 +7,7 @@ import WindySvg from "./../assets/windysvg.svg";
 import { Link } from "react-router-dom";
 
 const Forecast = ({ data }) => {
+  const [forecast,setForecast] = useState(data.list);
   function convertDateFormat(inputString) {
     // Parse the input string into a Date object
     const inputDate = new Date(inputString);  
@@ -21,6 +22,7 @@ const Forecast = ({ data }) => {
 
     // Convert the date to the desired format
     const formattedDate = inputDate.toLocaleDateString("en-US", options);
+    // const formattedDate = inputDate.toLocaleDateString();
 
     return formattedDate;
   }
@@ -37,8 +39,31 @@ const Forecast = ({ data }) => {
     } else return SunnySvg;
   };
 
+const getDates = () => {
+  let date = new Date();
+  const d = [];
+  
+  for (let i=0;i<5;++i) {
+    date.setDate(new Date().getDate()+i)
+    d.push(date.toLocaleDateString())
+  } 
+  return d;
+}
+
+useEffect(() => {
+  setForecast(data.list);
+})
+
+const getForecast = (date) => {
+  const forecastData = forecast.filter((f) => {
+    return new Date(f.dt*1000).toLocaleDateString() === date
+  })[0];
+  return {humidity: forecastData.main.humidity, wind: forecastData.wind.speed, maxTemp: forecastData.main.temp_max, minTemp: forecastData.main.temp_min, imageUrl: `https://openweathermap.org/img/wn/${forecastData.weather[0].icon}@2x.png`,weatherDesc: forecastData.weather[0].description }
+}
+
+
+
   return (
-    <Link to={`/${(data.list[0].dt_txt.split(" ")[0])}`}>
     <div>
       <h2 style={{ color: "white", padding: "1em", margin: "1em" }}>
         {data.city.name}, {data.city.country}
@@ -52,8 +77,13 @@ const Forecast = ({ data }) => {
           overflowX:"scroll"
         }}
       >
-        {data.list.map((forecast, index) => 
-          {if(index%6==0)return <div
+        {/* {data.list.map((forecast, index) => 
+        {
+          console.log(new Date(data.list[index].dt*1000).toLocaleDateString())
+          return index%6===0 ?
+          (<Link to={`/${new Date(data.list[index].dt*1000).toLocaleDateString()}`}>
+          
+          <div
             key={index}
             style={{
               background: "rgba(60, 60, 60,0.3)",
@@ -83,12 +113,49 @@ const Forecast = ({ data }) => {
             <h4>Humidity: {forecast.main.humidity}%</h4>
             <h4>Wind Speed: {forecast.wind.speed} m/s</h4>
             {/* You can include more details as needed */}
-          </div>; 
-          else return null
-          })}
+          {/* </div>
+        </Link>):null
+})} */}
+{
+  getDates().map((date,index) => {
+    return <Link to={`/${date}`}>
+          
+          <div
+            key={index}
+            style={{
+              background: "rgba(60, 60, 60,0.3)",
+              margin: "1em",
+              padding: "1em",
+              borderRadius: "20px",
+              color: "white",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "start",
+              width: "18%",
+              minWidth:"250px",
+              
+            }}
+          >
+            <h2>{date}</h2>
+            <h4>Temp Min: {getForecast(date).minTemp} K</h4>
+            <h4>Temp Max: {getForecast(date).maxTemp} K</h4>
+            <p>
+              <img
+                src={getForecast(date).imageUrl}
+                alt={getForecast(date).weatherDesc}
+                style={{ width: "100px", margin: "1em" }}
+              />
+            </p>
+            <h4>Humidity: {getForecast(date).humidity}%</h4>
+            <h4>Wind Speed: {getForecast(date).wind} m/s</h4>
+            {/* You can include more details as needed */}
+           </div>
+        </Link>
+  })
+}
       </div>
     </div>
-    </Link>
   );
 };
 
