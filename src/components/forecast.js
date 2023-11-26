@@ -141,11 +141,11 @@ const getForecast = (date) => {
             <h4>Temp Min: {getForecast(date).minTemp} K</h4>
             <h4>Temp Max: {getForecast(date).maxTemp} K</h4>
             <p>
-              <img
-                src={getForecast(date).imageUrl}
+              {/* <img
+                // src={getForecast(date).imageUrl}
                 alt={getForecast(date).weatherDesc}
                 style={{ width: "100px", margin: "1em" }}
-              />
+              /> */}
             </p>
             <h4>Humidity: {getForecast(date).humidity}%</h4>
             <h4>Wind Speed: {getForecast(date).wind} m/s</h4>
