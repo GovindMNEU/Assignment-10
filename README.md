@@ -1,3 +1,48 @@
+# Weather Forecasting Application using React
+
+This project is a weather forecasting application built with React. It showcases a 5-day weather forecast, displaying daily high and low temperatures, along with images depicting different weather conditions (sunny, rainy, cloudy, snowy). Initially, it utilizes fake hard-coded data for rendering purposes until the functionality is implemented accurately.
+
+## Features
+
+- Displays a 5-day weather forecast with high and low temperatures for each day.
+- Illustrates weather conditions with corresponding images (sunny, rainy, cloudy, snowy).
+- Click on a specific day to view its hourly forecast.
+- Integration of React Router for navigation:
+  - `/` route presents the 5-day forecast.
+  - `/[name-of-day]` route exhibits the hourly forecast for a specific day.
+
+## Setup
+
+1. Clone this repository.
+2. Install project dependencies using `npm install`.
+3. Obtain a free API key from [OpenWeatherMap](https://openweathermap.org/) and add it to the project.
+
+## Usage
+
+- Run the application using `npm start`.
+- Access the 5-day forecast at the root route (`/`).
+- Click on a specific day to view its hourly forecast by navigating to `/[name-of-day]`.
+
+## API Integration
+
+This application fetches real 5-day forecast data from the OpenWeatherMap API. Make sure to include your API key for seamless data retrieval.
+
+## Technology Stack
+
+- React
+- React Router
+- OpenWeatherMap API
+
+## Contributions
+
+Contributions are encouraged! Feel free to submit issues or pull requests.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
